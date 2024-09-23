@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Сторінка студента</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 50px;
+        }
+        #studentName {
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 15px;
+            font-size: 16px;
+        }
+    </style>
+    <script>
+        
+        function displayStudentName() {
+            const surname = "Pivarchuk";
+            const name = "Ivanna";
+            const patronymic = "Mykhailivna";
+            const fullName = `${surname} ${name} ${patronymic}`;
+            document.getElementById("studentName").textContent = fullName;
+        }
+
+        
+        function showBirthInfo() {
+            const birthDate = "15 june 2006 року";
+            const birthPlace = "Ivano-Frankivsk, Ukraine";
+            alert(`Дата народження: ${birthDate}\nМісце народження: ${birthPlace}`);
+        }
+
+        
+        window.onload = displayStudentName;
+    </script>
+</head>
+<body>
+    <h1>Ласкаво просимо на сторінку студента</h1>
+    <p>Ця сторінка містить інформацію про студента, представлена різними способами.</p>
+
+    <div id="studentName"></div>
+
+    <button onclick="showBirthInfo()">Показати дату та місце народження</button>
+</body>
+</html>
