@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Дослідження методів console</title>
+</head>
+<body>
+    <h1>Дослідження методів console</h1>
+    <script>
+        // 1. console.info()
+        console.info("Це інформаційне повідомлення.");
+
+        // 2. console.warn()
+        console.warn("Це попереджувальне повідомлення!");
+
+        // 3. console.error()
+        console.error("Це повідомлення про помилку!");
+
+        // 4. console.dir()
+        const obj = { name: "Іван", age: 30, city: "Київ" };
+        console.dir(obj, { colors: true });
+
+        // 5. console.dirxml()
+        console.dirxml(obj);  // Виведе об'єкт у вигляді XML (якщо підтримується)
+
+        // 6. console.time() і console.timeEnd()
+        console.time("Час виконання");
+        for (let i = 0; i < 1000000; i++) {
+            // Просто цикл для затримки
+        }
+        console.timeEnd("Час виконання");
+
+        // 7. console.profile() і console.profileEnd()
+        console.profile("Мій профіль");
+        for (let i = 0; i < 100000; i++) {
+            // Знову, просто цикл для затримки
+        }
+        console.profileEnd("Мій профіль");
+
+        // 8. console.assert()
+        const condition = false; // Змінюйте на true/false для тестування
+        console.assert(condition, "Умова не виконана!");
+
+        // 9. console.table()
+        const users = [
+            { name: "Іванка", age: 18 },
+            { name: "Денис", age: 15 },
+            { name: "Віка", age: 35 }
+        ];
+        console.table(users);  // Виводить дані у табличному форматі
+    </script>
+</body>
+</html>
