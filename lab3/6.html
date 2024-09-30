@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ієрархічне дерево</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        ul {
+            list-style-type: none; /* Сховати маркери списку */
+            padding-left: 20px; /* Відступ для підрозділів */
+        }
+        .toggle {
+            cursor: pointer; /* Змінити курсор на вказівник */
+            color: blue; /* Колір посилань */
+            text-decoration: underline; /* Підкреслення посилань */
+        }
+    </style>
+</head>
+<body>
+    <h1>Ієрархічне дерево фруктів і овочів</h1>
+    <ul>
+        <li>
+            <span class="toggle">Фрукти</span>
+            <ul>
+                <li>Яблуко</li>
+                <li>Ананас</li>
+                <li>Абрикос</li>
+                <li>Груша</li>
+                <li>Лимон</li>
+            </ul>
+        </li>
+        <li>
+            <span class="toggle">Овочі</span>
+            <ul>
+                <li>Картопля</li>
+                <li>Буряк</li>
+                <li>Морква</li>
+                <li>Груша</li>
+            </ul>
+        </li>
+    </ul>
+
+    <script>
+        // Знаходимо всі елементи з класом 'toggle'
+        const toggles = document.querySelectorAll('.toggle');
+
+        // Додаємо обробник подій для кожного елемента
+        toggles.forEach(toggle => {
+            toggle.addEventListener('click', function() {
+                // Знаходимо наступний ul (підсписок) і перемикаємо видимість
+                const nextUl = this.nextElementSibling;
+                if (nextUl) {
+                    nextUl.style.display = (nextUl.style.display === 'none' || nextUl.style.display === '') ? 'block' : 'none';
+                }
+            });
+        });
+
+        // Сховати всі підсписки на початку
+        const subLists = document.querySelectorAll('ul ul');
+        subLists.forEach(ul => {
+            ul.style.display = 'none';
+        });
+    </script>
+</body>
+</html>

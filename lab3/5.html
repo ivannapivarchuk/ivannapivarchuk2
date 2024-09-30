@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Перевірка знань арифметики</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        input {
+            padding: 10px;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Перевірка знань арифметики</h1>
+    <div id="question"></div>
+    <input type="text" id="answer" placeholder="Введіть вашу відповідь" />
+    <button id="checkButton">Перевірити</button>
+    <button id="nextButton" style="display:none;">Наступне завдання</button>
+    <div id="result"></div>
+    <div id="score"></div>
+
+    <script>
+        const operators = ['+', '-', '*', '/'];
+        let currentQuestion = {};
+        let correctAnswersCount = 0;
+        let totalQuestions = 0;
+
+        function generateQuestion() {
+            const num1 = Math.floor(Math.random() * 10);
+            const num2 = Math.floor(Math.random() * 10);
+            const operator = operators[Math.floor(Math.random() * operators.length)];
+
+            // Обробка ділення, щоб не ділити на 0
+            if (operator === '/') {
+                // Якщо друге число 0, беремо інше випадкове число
+                if (num2 === 0) {
+                    return generateQuestion();
+                }
+            }
+
+            // Формування питання
+            currentQuestion = { num1, num2, operator };
+            document.getElementById('question').textContent = 
+                `${num1} ${operator} ${num2} = ?`;
+            document.getElementById('answer').value = '';
+            document.getElementById('result').textContent = '';
+            document.getElementById('nextButton').style.display = 'none';
+            document.getElementById('checkButton').style.display = 'inline';
+            totalQuestions++;
+        }
+
+        function checkAnswer() {
+            const answerField = document.getElementById('answer');
+            const userAnswer = parseFloat(answerField.value);
+            let correctAnswer;
+
+            switch (currentQuestion.operator) {
+                case '+':
+                    correctAnswer = currentQuestion.num1 + currentQuestion.num2;
+                    break;
+                case '-':
+                    correctAnswer = currentQuestion.num1 - currentQuestion.num2;
+                    break;
+                case '*':
+                    correctAnswer = currentQuestion.num1 * currentQuestion.num2;
+                    break;
+                case '/':
+                    correctAnswer = (currentQuestion.num1 / currentQuestion.num2).toFixed(2); // Два знаки після коми
+                    break;
+            }
+
+            // Порівнюємо відповіді
+            if (userAnswer === correctAnswer) {
+                correctAnswersCount++;
+                document.getElementById('result').textContent = "Правильно!";
+            } else {
+                document.getElementById('result').textContent = 
+                    `Помилка, правильна відповідь «${correctAnswer}».`;
+            }
+
+            // Оновлюємо рахунок
+            document.getElementById('score').textContent = 
+                `Правильні відповіді: ${correctAnswersCount} з ${totalQuestions}`;
+
+            // Ховаємо кнопку перевірки та показуємо кнопку наступного завдання
+            document.getElementById('checkButton').style.display = 'none';
+            document.getElementById('nextButton').style.display = 'inline';
+        }
+
+        document.getElementById('checkButton').onclick = checkAnswer;
+        document.getElementById('nextButton').onclick = generateQuestion;
+
+        // Генеруємо перше питання при завантаженні
+        generateQuestion();
+    </script>
+</body>
+</html>
