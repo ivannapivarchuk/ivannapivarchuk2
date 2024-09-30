@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Сторінка студента - Завдання 1</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 50px;
+        }
+        #studentName {
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 15px;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        #calculationResult {
+            margin-top: 20px;
+            font-style: italic;
+            color: #333;
+            white-space: pre-line; /* Зберігає переноси рядків */
+        }
+        /* Стилі для форми */
+        .form-container {
+            margin-top: 30px;
+        }
+        .form-field {
+            margin-bottom: 15px;
+        }
+        .form-field input {
+            padding: 8px;
+            font-size: 14px;
+            width: 300px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+    </style>
+    <script>
+         function displayStudentName() {
+            const surname = "Pivarchuk";
+            const name = "Ivanna";
+            const patronymic = "Mykhailivna";
+            const fullName = `${surname} ${name} ${patronymic}`;
+            document.getElementById("studentName").textContent = fullName;
+        }
+
+        
+        function showBirthInfo() {
+            const birthDate = "15 june 2006 року";
+            const birthPlace = "Ivano-Frankivsk, Ukraine";
+            alert(`Дата народження: ${birthDate}\nМісце народження: ${birthPlace}`);
+            
+        }
+
+
+        
+        function calculateOperation() {
+            
+            let x = parseFloat(prompt("Введіть значення x:", "0"));
+            if (isNaN(x)) {
+                alert("Некоректне значення для x.");
+                return;
+            }
+
+            let y = parseFloat(prompt("Введіть значення y:", "0"));
+            if (isNaN(y)) {
+                alert("Некоректне значення для y.");
+                return;
+            }
+
+            let z = parseFloat(prompt("Введіть значення z:", "0"));
+            if (isNaN(z)) {
+                alert("Некоректне значення для z.");
+                return;
+            }
+
+            
+            let F1 = x + Math.pow(y, 2);
+
+            
+            if (z < 0) {
+                alert("Значення z не може бути від'ємним для кореня квадратного.");
+                return;
+            }
+            let F2 = Math.pow(z, 0.5);
+
+            
+            document.getElementById("calculationResult").textContent = 
+                `Результати розрахунку:\nF1 = x + y² = ${x} + ${y}² = ${F1}\nF2 = z^0.5 = ${z}^0.5 = ${F2}`;
+        }
+
+        
+        function handleChange() {
+            document.getElementById("messageField").value = "Значення змінено.";
+        }
+
+        
+        function handleMouseOut() {
+            document.getElementById("messageField").value = "Миша вийшла за межі поля.";
+        }
+
+        window.onload = displayStudentName;
+
+    
+
+function calculateBranchingOperation() {
+    let x = parseFloat(document.getElementById("xValue").value);
+    let y = parseFloat(document.getElementById("yValue").value);
+
+    if (isNaN(x) || isNaN(y)) {
+        alert("Некоректне значення для x або y.");
+        return;
+    }
+
+    let F;
+    if (x * y > 0) {
+        F = 3 * x * y - x;
+    } else if (7 * x > 2 * y || y > 2) {
+        F = 2 * x - (3 * y) / x;
+    } else {
+        F = x - y;
+    }
+
+    document.getElementById("calculationResult").textContent = 
+        `Результати розрахунку:\nF = ${F}`;
+}
+
+function handleChange() {
+    document.getElementById("messageField").value = "Значення змінено.";
+}
+
+function handleMouseOut() {
+    document.getElementById("messageField").value = "Миша вийшла за межі поля.";
+}
+
+window.onload = displayStudentName;
+
+    </script>
+</head>
+<body>
+
+    <!-- Відображення прізвища, імені та по батькові -->
+    <div id="studentName"></div>
+
+    <!-- Кнопка для показу дати та місця народження -->
+    <button onclick="showBirthInfo()">Показати дату та місце народження</button>
+<br>
+<br>
+    <!-- Кнопка для виконання арифметичної операції -->
+    <button onclick="calculateOperation()">Виконати арифметичну операцію</button>
+<br>
+<br>
+
+    <!-- Додаткові текстові поля форми -->
+    <div class="form-container">
+        <h2>Форма з обробкою подій</h2>
+        <div class="form-field">
+            <label for="inputField">Введіть текст:</label>
+            <input type="text" id="inputField" name="inputField" 
+                   onChange="handleChange()" 
+                   onMouseOut="handleMouseOut()">
+        </div>
+        <div class="form-field">
+            <label for="messageField">Повідомлення:</label>
+            <input type="text" id="messageField" name="messageField" readonly>
+        </div>
+    </div>
+    <!-- Введення значень змінних для обчислення -->
+    <div class="form-container">
+        <h2>Введення значень для обчислення</h2>
+        <div class="form-field">
+            <label for="xValue">Введіть значення x:</label>
+            <input type="text" id="xValue" name="xValue">
+        </div>
+        <div class="form-field">
+            <label for="yValue">Введіть значення y:</label>
+            <input type="text" id="yValue" name="yValue">
+        </div>
+    </div>
+
+    <!-- Кнопка для виконання арифметичної операції -->
+    <button onclick="calculateBranchingOperation()">Виконати розгалужене обчислення</button>
+<br><br>
+    <!-- Місце для відображення результату розрахунку -->
+    <div id="calculationResult"></div>
+<br>
+
+</body>
+</html>
