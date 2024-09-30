@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тестування</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Тестування</h1>
+    <form id="testForm">
+        <h3>1. Яка столиця України?</h3>
+        <label><input type="radio" name="pol0" value="0"> Львів</label><br>
+        <label><input type="radio" name="pol0" value="1"> Київ</label><br>
+        <label><input type="radio" name="pol0" value="0"> Одеса</label><br>
+        <label><input type="radio" name="pol0" value="0"> Харків</label><br>
+
+        <h3>2. Яка з цих тварин - ссавець?</h3>
+        <label><input type="radio" name="pol1" value="1"> Кіт</label><br>
+        <label><input type="radio" name="pol1" value="0"> Ящірка</label><br>
+        <label><input type="radio" name="pol1" value="0"> Папуга</label><br>
+        <label><input type="radio" name="pol1" value="0"> Риба</label><br>
+
+        <h3>3. Які з цих фруктів червоного кольору? (Виберіть 2)</h3>
+        <label><input type="checkbox" name="pol2" value="1"> Яблуко</label><br>
+        <label><input type="checkbox" name="pol2" value="1"> Вишня</label><br>
+        <label><input type="checkbox" name="pol2" value="0"> Банан</label><br>
+        <label><input type="checkbox" name="pol2" value="0"> Киві</label><br>
+
+        <h3>4. Яка з цих країн є острівною?</h3>
+        <label><input type="checkbox" name="pol3" value="1"> Японія</label><br>
+        <label><input type="checkbox" name="pol3" value="0"> Україна</label><br>
+        <label><input type="checkbox" name="pol3" value="1"> Ірландія</label><br>
+        <label><input type="checkbox" name="pol3" value="0"> Німеччина</label><br>
+
+        <h3>5. Виберіть страви з української кухні (Виберіть 2)</h3>
+        <label><input type="checkbox" name="pol4" value="1"> Борщ</label><br>
+        <label><input type="checkbox" name="pol4" value="1"> Вареники</label><br>
+        <label><input type="checkbox" name="pol4" value="0"> Піца</label><br>
+        <label><input type="checkbox" name="pol4" value="0"> Суші</label><br>
+
+        <h3>6. Коли почалася Друга світова війна?</h3>
+        <label><input type="radio" name="pol5" value="1"> 1939 </label><br>
+        <label><input type="radio" name="pol5" value="0"> 1940 </label><br>
+        <label><input type="radio" name="pol5" value="0"> 1941</label><br>
+        <label><input type="radio" name="pol5" value="0"> 1945</label><br>
+
+        <h3>7. Напишіть свою улюблену страву:</h3>
+        <input type="text" name="pol6" required>
+
+        <br><br>
+        <button type="button" onclick="calculateResults()">Завершити тестування</button>
+    </form>
+
+    <div id="results" style="display:none;">
+        <h2>Результати тестування</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Запитання</th>
+                    <th>Обрана відповідь</th>
+                    <th>Бали</th>
+                </tr>
+            </thead>
+            <tbody id="resultsBody"></tbody>
+        </table>
+        <h3 id="totalScore"></h3>
+    </div>
+
+    <script>
+        function calculateResults() {
+            const form = document.getElementById('testForm');
+            const resultsBody = document.getElementById('resultsBody');
+            const totalScoreElement = document.getElementById('totalScore');
+            let totalScore = 0;
+
+            // Очищення попередніх результатів
+            resultsBody.innerHTML = '';
+
+            // Запитання 1
+            const question0 = 'Яка столиця України?';
+            const result0 = Array.from(form.pol0).find(input => input.checked);
+            if (result0) {
+                totalScore += parseInt(result0.value);
+                resultsBody.innerHTML += `<tr><td>${question0}</td><td>${result0.nextSibling.textContent.trim()}</td><td>${result0.value}</td></tr>`;
+            }
+
+            // Запитання 2
+            const question1 = 'Яка з цих тварин - ссавець?';
+            const result1 = Array.from(form.pol1).find(input => input.checked);
+            if (result1) {
+                totalScore += parseInt(result1.value);
+                resultsBody.innerHTML += `<tr><td>${question1}</td><td>${result1.nextSibling.textContent.trim()}</td><td>${result1.value}</td></tr>`;
+            }
+
+            // Запитання 3
+            const question2 = 'Які з цих фруктів червоного кольору?';
+            const checkboxes2 = Array.from(form.pol2);
+            const selected2 = checkboxes2.filter(cb => cb.checked);
+            let score2 = 0;
+
+            if (selected2.length === 2) {
+                const correctAnswers = selected2.filter(cb => cb.value === '1').length;
+                if (correctAnswers === 2) {
+                    score2 = 2;
+                } else if (correctAnswers === 1) {
+                    score2 = 1;
+                }
+            }
+            totalScore += score2;
+            resultsBody.innerHTML += `<tr><td>${question2}</td><td>${selected2.map(cb => cb.nextSibling.textContent.trim()).join(', ')}</td><td>${score2}</td></tr>`;
+
+            // Запитання 4
+            const question3 = 'Яка з цих країн є острівною?';
+            const checkboxes3 = Array.from(form.pol3);
+            const selected3 = checkboxes3.filter(cb => cb.checked);
+            let score3 = 0;
+
+            if (selected3.length === 2) {
+                const correctAnswers = selected3.filter(cb => cb.value === '1').length;
+                if (correctAnswers === 2) {
+                    score3 = 2;
+                } else if (correctAnswers === 1) {
+                    score3 = 1;
+                }
+            }
+            totalScore += score3;
+            resultsBody.innerHTML += `<tr><td>${question3}</td><td>${selected3.map(cb => cb.nextSibling.textContent.trim()).join(', ')}</td><td>${score3}</td></tr>`;
+
+            // Запитання 5
+            const question4 = 'Виберіть страви з української кухні';
+            const checkboxes4 = Array.from(form.pol4);
+            const selected4 = checkboxes4.filter(cb => cb.checked);
+            let score4 = 0;
+
+            if (selected4.length === 2) {
+                const correctAnswers = selected4.filter(cb => cb.value === '1').length;
+                if (correctAnswers === 2) {
+                    score4 = 2;
+                } else if (correctAnswers === 1) {
+                    score4 = 1;
+                }
+            }
+            totalScore += score4;
+            resultsBody.innerHTML += `<tr><td>${question4}</td><td>${selected4.map(cb => cb.nextSibling.textContent.trim()).join(', ')}</td><td>${score4}</td></tr>`;
+
+            // Запитання 6
+            const question5 = 'Коли почалася Друга світова війна?';
+            const result5 = Array.from(form.pol5).find(input => input.checked);
+            if (result5) {
+                totalScore += parseInt(result5.value);
+                resultsBody.innerHTML += `<tr><td>${question5}</td><td>${result5.nextSibling.textContent.trim()}</td><td>${result5.value}</td></tr>`;
+            }
+
+            // Запитання 7
+            const question6 = 'Ваша улюблена страва';
+            const answer6 = form.pol6.value.trim();
+            resultsBody.innerHTML += `<tr><td>${question6}</td><td>${answer6}</td><td>0</td></tr>`; // 0 балів за текстове поле
+
+            // Показати результати
+            totalScoreElement.textContent = `Загальний бал: ${totalScore}`;
+            document.getElementById('results').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
