@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Розрахунок площ геометричних фігур</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        label, select, input {
+            margin: 10px 0;
+            display: block;
+        }
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Розрахунок площ геометричних фігур</h1>
+
+    <label for="shapeSelect">Виберіть фігуру:</label>
+    <select id="shapeSelect">
+        <option value="triangle">Трикутник</option>
+        <option value="square">Квадрат</option>
+        <option value="rectangle">Прямокутник</option>
+        <option value="parallelogram">Паралелограм</option>
+        <option value="rhombus">Ромб</option>
+        <option value="trapezoid">Трапеція</option>
+        <option value="quadrilateral">Опуклий чотирикутник</option>
+        <option value="circle">Круг</option>
+        <option value="ellipse">Еліпс</option>
+    </select>
+
+    <div id="parameters"></div>
+    
+    <div id="result"></div>
+
+    <script>
+        const shapeSelect = document.getElementById('shapeSelect');
+        const parametersDiv = document.getElementById('parameters');
+        const resultDiv = document.getElementById('result');
+
+        // Функція для генерації полів вводу в залежності від вибраної фігури
+        function generateParameters() {
+            const shape = shapeSelect.value;
+            parametersDiv.innerHTML = ''; // Очищення попередніх полів
+
+            switch (shape) {
+                case 'triangle':
+                    parametersDiv.innerHTML = `
+                        <label for="base">Основу (b):</label>
+                        <input type="number" id="base" placeholder="Введіть основу" oninput="calculateArea()">
+                        <label for="height">Висоту (h):</label>
+                        <input type="number" id="height" placeholder="Введіть висоту" oninput="calculateArea()">
+                    `;
+                    break;
+                case 'square':
+                    parametersDiv.innerHTML = `
+                        <label for="side">Сторону (a):</label>
+                        <input type="number" id="side" placeholder="Введіть сторону" oninput="calculateArea()">
+                    `;
+                    break;
+                case 'rectangle':
+                    parametersDiv.innerHTML = `
+                        <label for="length">Довжину (l):</label>
+                        <input type="number" id="length" placeholder="Введіть довжину" oninput="calculateArea()">
+                        <label for="width">Ширину (w):</label>
+                        <input type="number" id="width" placeholder="Введіть ширину" oninput="calculateArea()">
+                    `;
+                    break;
+                case 'parallelogram':
+                    parametersDiv.innerHTML = `
+                        <label for="baseP">Основу (b):</label>
+                        <input type="number" id="baseP" placeholder="Введіть основу" oninput="calculateArea()">
+                        <label for="heightP">Висоту (h):</label>
+                        <input type="number" id="heightP" placeholder="Введіть висоту" oninput="calculateArea()">
+                    `;
+                    break;
+                case 'rhombus':
+                    parametersDiv.innerHTML = `
+                        <label for="d1">Діагональ 1 (d1):</label>
+                        <input type="number" id="d1" placeholder="Введіть діагональ 1" oninput="calculateArea()">
+                        <label for="d2">Діагональ 2 (d2):</label>
+                        <input type="number" id="d2" placeholder="Введіть діагональ 2" oninput="calculateArea()">
+                    `;
+                    break;
+                case 'trapezoid':
+                    parametersDiv.innerHTML = `
+                        <label for="a">Довжина першої основи (a):</label>
+                        <input type="number" id="a" placeholder="Введіть основу a" oninput="calculateArea()">
+                        <label for="b">Довжина другої основи (b):</label>
+                        <input type="number" id="b" placeholder="Введіть основу b" oninput="calculateArea()">
+                        <label for="heightT">Висота (h):</label>
+                        <input type="number" id="heightT" placeholder="Введіть висоту" oninput="calculateArea()">
+                    `;
+                    break;
+                case 'quadrilateral':
+                    parametersDiv.innerHTML = `
+                        <label for="s1">Сторона 1 (s1):</label>
+                        <input type="number" id="s1" placeholder="Введіть сторону 1" oninput="calculateArea()">
+                        <label for="s2">Сторона 2 (s2):</label>
+                        <input type="number" id="s2" placeholder="Введіть сторону 2" oninput="calculateArea()">
+                        <label for="s3">Сторона 3 (s3):</label>
+                        <input type="number" id="s3" placeholder="Введіть сторону 3" oninput="calculateArea()">
+                        <label for="s4">Сторона 4 (s4):</label>
+                        <input type="number" id="s4" placeholder="Введіть сторону 4" oninput="calculateArea()">
+                        <label for="heightQ">Висота (h):</label>
+                        <input type="number" id="heightQ" placeholder="Введіть висоту" oninput="calculateArea()">
+                    `;
+                    break;
+                case 'circle':
+                    parametersDiv.innerHTML = `
+                        <label for="radius">Радіус (r):</label>
+                        <input type="number" id="radius" placeholder="Введіть радіус" oninput="calculateArea()">
+                    `;
+                    break;
+                case 'ellipse':
+                    parametersDiv.innerHTML = `
+                        <label for="aEllipse">Велику піввісь (a):</label>
+                        <input type="number" id="aEllipse" placeholder="Введіть велику піввісь" oninput="calculateArea()">
+                        <label for="bEllipse">Малу піввісь (b):</label>
+                        <input type="number" id="bEllipse" placeholder="Введіть малу піввісь" oninput="calculateArea()">
+                    `;
+                    break;
+            }
+            resultDiv.innerHTML = ''; // Очищення попереднього результату
+        }
+
+        // Функція для обчислення площі
+        function calculateArea() {
+            const shape = shapeSelect.value;
+            let area = 0;
+
+            switch (shape) {
+                case 'triangle':
+                    const base = parseFloat(document.getElementById('base').value);
+                    const height = parseFloat(document.getElementById('height').value);
+                    if (!isNaN(base) && !isNaN(height)) {
+                        area = (base * height) / 2;
+                    }
+                    break;
+                case 'square':
+                    const side = parseFloat(document.getElementById('side').value);
+                    if (!isNaN(side)) {
+                        area = Math.pow(side, 2);
+                    }
+                    break;
+                case 'rectangle':
+                    const length = parseFloat(document.getElementById('length').value);
+                    const width = parseFloat(document.getElementById('width').value);
+                    if (!isNaN(length) && !isNaN(width)) {
+                        area = length * width;
+                    }
+                    break;
+                case 'parallelogram':
+                    const baseP = parseFloat(document.getElementById('baseP').value);
+                    const heightP = parseFloat(document.getElementById('heightP').value);
+                    if (!isNaN(baseP) && !isNaN(heightP)) {
+                        area = baseP * heightP;
+                    }
+                    break;
+                case 'rhombus':
+                    const d1 = parseFloat(document.getElementById('d1').value);
+                    const d2 = parseFloat(document.getElementById('d2').value);
+                    if (!isNaN(d1) && !isNaN(d2)) {
+                        area = (d1 * d2) / 2;
+                    }
+                    break;
+                case 'trapezoid':
+                    const a = parseFloat(document.getElementById('a').value);
+                    const b = parseFloat(document.getElementById('b').value);
+                    const heightT = parseFloat(document.getElementById('heightT').value);
+                    if (!isNaN(a) && !isNaN(b) && !isNaN(heightT)) {
+                        area = ((a + b) * heightT) / 2;
+                    }
+                    break;
+                case 'quadrilateral':
+                    const s1 = parseFloat(document.getElementById('s1').value);
+                    const s2 = parseFloat(document.getElementById('s2').value);
+                    const s3 = parseFloat(document.getElementById('s3').value);
+                    const s4 = parseFloat(document.getElementById('s4').value);
+                    const heightQ = parseFloat(document.getElementById('heightQ').value);
+                    if (!isNaN(s1) && !isNaN(s2) && !isNaN(s3) && !isNaN(s4) && !isNaN(heightQ)) {
+                        area = heightQ * ((s1 + s3) / 2); // Спрощена формула для чотирикутника
+                    }
+                    break;
+                case 'circle':
+                    const radius = parseFloat(document.getElementById('radius').value);
+                    if (!isNaN(radius)) {
+                        area = Math.PI * Math.pow(radius, 2);
+                    }
+                    break;
+                case 'ellipse':
+                    const aEllipse = parseFloat(document.getElementById('aEllipse').value);
+                    const bEllipse = parseFloat(document.getElementById('bEllipse').value);
+                    if (!isNaN(aEllipse) && !isNaN(bEllipse)) {
+                        area = Math.PI * aEllipse * bEllipse;
+                    }
+                    break;
+            }
+
+            if (!isNaN(area) && area >= 0) {
+                resultDiv.innerHTML = `Площа: ${area.toFixed(2)}`;
+            } else {
+                resultDiv.innerHTML = '';
+            }
+        }
+
+        // Додайте слухача подій на зміну вибору фігури
+        shapeSelect.addEventListener('change', generateParameters);
+        // Ініціалізуйте параметри для першої фігури
+        generateParameters();
+    </script>
+</body>
+</html>
