@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Простий калькулятор</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 50px;
+        }
+        #calculator {
+            width: 220px;
+        }
+        #output {
+            width: 100%;
+            padding: 10px;
+            font-size: 18px;
+            text-align: right;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+        }
+        button {
+            width: 50px;
+            height: 50px;
+            margin: 5px;
+            font-size: 18px;
+        }
+    </style>
+    <script>
+        // Функція для додавання символів до поля введення
+        function insert(value) {
+            document.getElementById("output").value += value;
+        }
+
+        // Функція для очищення поля введення
+        function clearOutput() {
+            document.getElementById("output").value = "";
+        }
+
+        // Функція для видалення останнього символу
+        function backspace() {
+            const currentOutput = document.getElementById("output").value;
+            document.getElementById("output").value = currentOutput.slice(0, -1);
+        }
+
+        // Функція для обчислення результату
+        function calculate() {
+            const expression = document.getElementById("output").value;
+            try {
+                const result = eval(expression); // Використовуємо eval() для обчислення
+                document.getElementById("output").value = result;
+            } catch (error) {
+                document.getElementById("output").value = "Помилка";
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <h1>Простий калькулятор</h1>
+
+    <div id="calculator">
+        <!-- Поле для відображення виразів і результату -->
+        <input type="text" id="output" readonly>
+
+        <!-- Кнопки калькулятора -->
+        <div>
+            <button onclick="insert('1')">1</button>
+            <button onclick="insert('2')">2</button>
+            <button onclick="insert('3')">3</button>
+            <button onclick="insert('+')">+</button>
+        </div>
+        <div>
+            <button onclick="insert('4')">4</button>
+            <button onclick="insert('5')">5</button>
+            <button onclick="insert('6')">6</button>
+            <button onclick="insert('-')">-</button>
+        </div>
+        <div>
+            <button onclick="insert('7')">7</button>
+            <button onclick="insert('8')">8</button>
+            <button onclick="insert('9')">9</button>
+            <button onclick="insert('*')">*</button>
+        </div>
+        <div>
+            <button onclick="insert('0')">0</button>
+            <button onclick="insert('.')">.</button>
+            <button onclick="calculate()">=</button>
+            <button onclick="insert('/')">/</button>
+        </div>
+        <div>
+            <button onclick="clearOutput()">C</button>
+            <button onclick="backspace()">←</button>
+        </div>
+    </div>
+
+</body>
+</html>

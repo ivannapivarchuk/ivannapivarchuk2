@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Таблиця із розрахунком</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 8px;
+            text-align: center;
+        }
+        input {
+            margin-bottom: 10px;
+        }
+    </style>
+    <script>
+        // Функція для створення таблиці
+        function createTable() {
+            const rows = parseInt(document.getElementById('rows').value);
+            const cols = parseInt(document.getElementById('cols').value);
+            
+            if (isNaN(rows) || isNaN(cols) || rows <= 0 || cols <= 0) {
+                alert("Будь ласка, введіть правильні значення для кількості рядків та стовпців.");
+                return;
+            }
+
+            let table = '<table><tr>';
+
+            // Створення заголовків стовпців
+            for (let j = 1; j <= cols; j++) {
+                table += `<th>Стовпець ${j}</th>`;
+            }
+            table += '</tr>';
+
+            let lastColProduct = 1; // Для збереження добутку останнього стовпця
+
+            // Створення рядків та заповнення таблиці
+            for (let i = 1; i <= rows; i++) {
+                table += '<tr>';
+                for (let j = 1; j <= cols; j++) {
+                    const value = 7 * j + 2 * i;
+                    table += `<td>${value}</td>`;
+                    
+                    // Якщо це останній стовпець, множимо його значення
+                    if (j === cols) {
+                        lastColProduct *= value;
+                    }
+                }
+                table += '</tr>';
+            }
+            table += '</table>';
+
+            // Виведення таблиці та результату
+            document.getElementById('tableContainer').innerHTML = table;
+            document.getElementById('result').textContent = `Добуток елементів останнього стовпця: ${lastColProduct}`;
+        }
+    </script>
+</head>
+<body>
+
+    <h1>Генерація таблиці</h1>
+
+    <!-- Введення кількості рядків та стовпців -->
+    <label for="rows">Кількість рядків:</label>
+    <input type="number" id="rows" min="1" placeholder="Введіть кількість рядків">
+    <br>
+    <label for="cols">Кількість стовпців:</label>
+    <input type="number" id="cols" min="1" placeholder="Введіть кількість стовпців">
+    <br>
+
+    <!-- Кнопка для створення таблиці -->
+    <button onclick="createTable()">Створити таблицю</button>
+
+    <!-- Контейнер для виведення таблиці -->
+    <div id="tableContainer"></div>
+
+    <!-- Контейнер для виведення результату -->
+    <p id="result"></p>
+
+</body>
+</html>

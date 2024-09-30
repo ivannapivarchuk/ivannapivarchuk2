@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Годинник і календар</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 50px;
+        }
+        #clock {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin-top: 20px;
+        }
+    </style>
+    <script>
+        // Функція для отримання поточного часу і дати у форматі hour$min$sec-year$moun$day
+        function updateClock() {
+            const now = new Date();
+            
+            // Отримуємо поточні години, хвилини і секунди
+            let hours = now.getHours();
+            let minutes = now.getMinutes();
+            let seconds = now.getSeconds();
+            
+            // Додаємо провідний нуль, якщо значення менше 10
+            hours = hours < 10 ? '0' + hours : hours;
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+
+            // Отримуємо поточний рік, місяць і день
+            const year = now.getFullYear();
+            let month = now.getMonth() + 1; // Місяці в JS починаються з 0
+            let day = now.getDate();
+
+            // Додаємо провідний нуль до місяців і днів, якщо значення менше 10
+            month = month < 10 ? '0' + month : month;
+            day = day < 10 ? '0' + day : day;
+
+            // Форматування рядка у вигляді hour$min$sec-year$moun$day
+            const formattedDateTime = `${hours}$${minutes}$${seconds}-${year}$${month}$${day}`;
+
+            // Виводимо на сторінку
+            document.getElementById("clock").textContent = formattedDateTime;
+        }
+
+        // Оновлюємо годинник кожну секунду
+        setInterval(updateClock, 1000);
+        
+        // Оновлюємо годинник при завантаженні сторінки
+        window.onload = updateClock;
+    </script>
+</head>
+<body>
+
+    <h1>Годинник і календар</h1>
+
+    <!-- Контейнер для відображення часу і дати -->
+    <div id="clock"></div>
+
+</body>
+</html>
