@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Інформація про товар</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 50px;
+        }
+        .form-container {
+            margin-top: 30px;
+        }
+        .form-field {
+            margin-bottom: 15px;
+        }
+        .form-field input {
+            padding: 8px;
+            font-size: 14px;
+            width: 300px;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 15px;
+            font-size: 16px;
+        }
+        #result, #totalAmount {
+            margin-top: 20px;
+            font-style: italic;
+            color: #333;
+        }
+    </style>
+    <script>
+        // Масиви з інформацією про товари
+        const products = ["Папка", "Пінопласт", "Пакет"];
+        const quantities = [10, 5, 8];  // Кількість на складі
+        const prices = [200, 1500, 3000];  // Вартість за одиницю товару
+
+        let selectedProductIndex = -1; // Змінна для зберігання індексу вибраного товару
+
+        // Функція для отримання кількості і вартості (fun1)
+        function fun1() {
+            const productName = document.getElementById("productName").value.trim();
+            selectedProductIndex = products.indexOf(productName);
+
+            if (selectedProductIndex !== -1) {
+                const quantity = quantities[selectedProductIndex];
+                const price = prices[selectedProductIndex];
+
+                document.getElementById("result").textContent = 
+                    `Товар: ${productName}\nКількість на складі: ${quantity}\nВартість за одиницю: ${price} грн`;
+            } else {
+                document.getElementById("result").textContent = "Товар не знайдено. Перевірте назву.";
+            }
+        }
+
+        // Функція для виведення загальної вартості (fun2)
+        function fun2() {
+            if (selectedProductIndex !== -1) {
+                const totalAmount = quantities[selectedProductIndex] * prices[selectedProductIndex];
+                document.getElementById("totalAmount").textContent = 
+                    `Загальна вартість товару: ${totalAmount} грн`;
+            } else {
+                document.getElementById("totalAmount").textContent = 
+                    "Спочатку введіть правильну назву товару та натисніть кнопку 'Наявна кількість і вартість'.";
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <h1>Інформація про товар</h1>
+
+    <div class="form-container">
+        <div class="form-field">
+            <label for="productName">Введіть назву товару:</label>
+            <input type="text" id="productName" name="productName">
+        </div>
+
+        <button onclick="fun1()">Наявна кількість і вартість</button>
+        <button onclick="fun2()">Загальна сума</button>
+
+        <div id="result"></div>
+        <div id="totalAmount"></div>
+    </div>
+
+</body>
+</html>
