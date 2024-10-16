@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Завдання 3: Регулярні Вирази</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .section {
+            margin-bottom: 40px;
+        }
+        .output {
+            background-color: #f9f9f9;
+            padding: 10px;
+            border-left: 4px solid #ccc;
+            border-radius: 3px;
+            white-space: pre-wrap;
+        }
+        textarea {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        button {
+            padding: 8px 16px;
+            font-size: 16px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Завдання 3: Регулярні Вирази</h1>
+
+    <!-- 3.1. toCamelCase() -->
+    <div class="section">
+        <h2>3.1. Перетворення Snake Case у Lower Camel Case</h2>
+        <button onclick="convertToCamelCase()">Перетворити</button>
+        <div class="output" id="camelCaseOutput"></div>
+    </div>
+
+    <!-- 3.2. toSnakeCase() -->
+    <div class="section">
+        <h2>3.2. Перетворення Camel Case у Snake Case</h2>
+        <button onclick="convertToSnakeCase()">Перетворити</button>
+        <div class="output" id="snakeCaseOutput"></div>
+    </div>
+
+    <!-- 3.3. Замінення Формату Дат -->
+    <div class="section">
+        <h2>3.3. Замінення Формату Дат (yyyy/mm/dd на dd.mm.yyyy)</h2>
+        <textarea id="inputText" placeholder="Введіть текст із датами у форматі yyyy/mm/dd...">
+Сьогодні 2024/04/27. Завтра буде 2024/04/28. Минулого року був 2023/12/31.
+        </textarea>
+        <br>
+        <button onclick="replaceDates()">Замінити Дати</button>
+        <div class="output" id="datesOutput"></div>
+    </div>
+
+    <script>
+        // 3.1. Функція toCamelCase()
+        function toCamelCase(str) {
+            return str.replace(/_([a-z])/g, function (match, p1) {
+                return p1.toUpperCase();
+            });
+        }
+
+        function convertToCamelCase() {
+            const snakeCaseArray = ["my_variable", "new_brand_product", "example_snake_case"];
+            const camelCaseArray = snakeCaseArray.map(toCamelCase);
+            const output = 
+                "Вхідний масив (snake_case):\n" + JSON.stringify(snakeCaseArray) + "\n\n" +
+                "Вихідний масив (camelCase):\n" + JSON.stringify(camelCaseArray);
+            document.getElementById('camelCaseOutput').textContent = output;
+        }
+
+        // 3.2. Функція toSnakeCase()
+        function toSnakeCase(str) {
+            return str.replace(/([A-Z])/g, function (match) {
+                return "_" + match.toLowerCase();
+            });
+        }
+
+        function convertToSnakeCase() {
+            const camelCaseArray = ["myVariable", "newBrandProduct", "exampleSnakeCase"];
+            const snakeCaseArray = camelCaseArray.map(toSnakeCase);
+            const output = 
+                "Вхідний масив (camelCase):\n" + JSON.stringify(camelCaseArray) + "\n\n" +
+                "Вихідний масив (snake_case):\n" + JSON.stringify(snakeCaseArray);
+            document.getElementById('snakeCaseOutput').textContent = output;
+        }
+
+        // 3.3. Функція replaceDates()
+        function replaceDates() {
+            const input = document.getElementById('inputText').value;
+            const dateRegex = /(\b\d{4})\/(\d{2})\/(\d{2}\b)/g;
+            const replacedText = input.replace(dateRegex, '$3.$2.$1');
+            document.getElementById('datesOutput').textContent = replacedText;
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Завдання 2: Функції для Рядків</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .function-result {
+            margin-bottom: 20px;
+        }
+        .function-result h3 {
+            margin-bottom: 5px;
+        }
+        .output {
+            background-color: #f9f9f9;
+            padding: 10px;
+            border-left: 4px solid #ccc;
+            border-radius: 3px;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Завдання 2: Реалізація Функцій для Роботи із Рядками</h1>
+
+    <div class="function-result">
+        <h3>2.1. Порівняння Довжини Двох Рядків</h3>
+        <div class="output" id="result2_1"></div>
+    </div>
+
+    <div class="function-result">
+        <h3>2.2. Пошук Символів у Рядку</h3>
+        <div class="output" id="result2_2"></div>
+    </div>
+
+    <div class="function-result">
+        <h3>2.3. Перетворення Першого Символу у Верхній Реєстр</h3>
+        <div class="output" id="result2_3"></div>
+    </div>
+
+    <div class="function-result">
+        <h3>2.4. Підрахунок Кількості Голосних Літер</h3>
+        <div class="output" id="result2_4"></div>
+    </div>
+
+    <div class="function-result">
+        <h3>2.5. Перевірка Спаму у Рядку</h3>
+        <div class="output" id="result2_5"></div>
+    </div>
+
+    <div class="function-result">
+        <h3>2.6. Скорочення Рядка до Максимальної Довжини</h3>
+        <div class="output" id="result2_6"></div>
+    </div>
+
+    <script>
+        // 2.1. Функція для порівняння довжини двох рядків
+        function compareStringLength(str1, str2) {
+            if (str1.length > str2.length) {
+                return 1;
+            } else if (str1.length < str2.length) {
+                return -1;
+            } else {
+                return 0;
+            }
+        }
+
+        let strA = "Привіт";
+        let strB = "Світ";
+        let comparison = compareStringLength(strA, strB);
+        document.getElementById('result2_1').textContent = `Рядок A: "${strA}"\nРядок B: "${strB}"\nРезультат порівняння: ${comparison}`;
+
+        // 2.2. Функція для пошуку символів у рядку
+        function findCharIndices(str, char) {
+            let indices = [];
+            let count = 0;
+            for (let i = 0; i < str.length; i++) {
+                if (str[i] === char) {
+                    indices.push(i);
+                    count++;
+                }
+            }
+            return {
+                indices: indices,
+                count: count
+            };
+        }
+
+        let sampleText2_2 = "Це прикладовий рядок для пошуку символу 'о'.";
+        let searchChar = 'о';
+        let searchResult = findCharIndices(sampleText2_2, searchChar);
+        document.getElementById('result2_2').textContent = `Рядок: "${sampleText2_2}"\nШуканий символ: '${searchChar}'\nІндекси: ${searchResult.indices.join(', ')}\nКількість появ: ${searchResult.count}`;
+
+        // 2.3. Функція для перетворення першого символу у верхній реєстр
+        function capitalizeFirstLetter(str) {
+            if (str.length === 0) return str;
+            return str.charAt(0).toUpperCase() + str.slice(1);
+        }
+
+        let originalStr2_3 = "привіт світ!";
+        let capitalizedStr = capitalizeFirstLetter(originalStr2_3);
+        document.getElementById('result2_3').textContent = `Оригінал: "${originalStr2_3}"\nЗмінений: "${capitalizedStr}"`;
+
+        // 2.4. Функція для підрахунку кількості голосних літер
+        function countVowels(str) {
+            const vowels = ['а', 'е', 'є', 'и', 'і', 'ї', 'о', 'у', 'ю', 'я', 'a', 'e', 'i', 'o', 'u'];
+            let count = 0;
+            let lowerStr = str.toLowerCase();
+            for (let char of lowerStr) {
+                if (vowels.includes(char)) {
+                    count++;
+                }
+            }
+            return count;
+        }
+
+        let sampleStr2_4 = "Цей рядок містить декілька голосних літер.";
+        let vowelCount2_4 = countVowels(sampleStr2_4);
+        document.getElementById('result2_4').textContent = `Рядок: "${sampleStr2_4}"\nКількість голосних літер: ${vowelCount2_4}`;
+
+        // 2.5. Функція для перевірки спаму у рядку
+        function isSpam(str) {
+            const spamPhrases = [
+                "100% безкоштовно",
+                "збільшення продажів",
+                "тільки сьогодні",
+                "не видаляйте"
+            ];
+            let lowerStr = str.toLowerCase();
+            for (let phrase of spamPhrases) {
+                if (lowerStr.includes(phrase)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        let message1_2_5 = "Отримайте 100% безкоштовно доступ до курсу!";
+        let message2_2_5 = "Це звичайне повідомлення без спаму.";
+        let spamCheck1 = isSpam(message1_2_5);
+        let spamCheck2 = isSpam(message2_2_5);
+        document.getElementById('result2_5').textContent = `Повідомлення 1: "${message1_2_5}"\nЧи є спам: ${spamCheck1}\n\nПовідомлення 2: "${message2_2_5}"\nЧи є спам: ${spamCheck2}`;
+
+        // 2.6. Функція для скорочення рядка до максимальної довжини
+        function truncate(str, maxLength) {
+            if (str.length <= maxLength) {
+                return str;
+            }
+            if (maxLength <= 3) {
+                return '.'.repeat(maxLength);
+            }
+            return str.slice(0, maxLength - 3) + '...';
+        }
+
+        let longStr2_6 = "Hello, world!";
+        let truncatedStr2_6 = truncate(longStr2_6, 8);
+        let longStr2_6_1 = "Привіт, світ!";
+        let truncatedStr2_6_1 = truncate(longStr2_6_1, 10);
+        document.getElementById('result2_6').textContent = `Рядок: "${longStr2_6}"\nМаксимальна довжина: 8\nСкорочений рядок: "${truncatedStr2_6}"\n\nРядок: "${longStr2_6_1}"\nМаксимальна довжина: 10\nСкорочений рядок: "${truncatedStr2_6_1}"`;
+    </script>
+
+</body>
+</html>

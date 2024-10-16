@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Завдання 1: Функції</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .function-result {
+            margin-bottom: 20px;
+        }
+        .function-result h3 {
+            margin-bottom: 5px;
+        }
+        .output {
+            background-color: #f0f0f0;
+            padding: 10px;
+            border-radius: 5px;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Завдання 1: Реалізація Функцій</h1>
+
+    <div class="function-result">
+        <h3>1.1. Вивід чисел у зворотному порядку</h3>
+        <div class="output" id="result1"></div>
+    </div>
+
+    <div class="function-result">
+        <h3>1.2. Видалення нулів з масиву</h3>
+        <div class="output" id="result2"></div>
+    </div>
+
+    <div class="function-result">
+        <h3>1.3. Перевернення рядка</h3>
+        <div class="output" id="result3"></div>
+    </div>
+
+    <div class="function-result">
+        <h3>1.4. Заміна слів і пропусків у рядку</h3>
+        <div class="output" id="result4"></div>
+    </div>
+
+    <script>
+        // 1.1. Функція для виведення чисел у зворотному порядку
+        function reverseNumberSequence(numberSequence, delimiter = ' ') {
+            let numberArray = numberSequence.split(delimiter);
+            let reversedArray = numberArray.reverse();
+            let reversedSequence = reversedArray.join(delimiter);
+            return reversedSequence;
+        }
+
+        let numbers = "1 2 3 4 5";
+        let reversedNumbers = reverseNumberSequence(numbers);
+        document.getElementById('result1').textContent = `Оригінал: ${numbers}\nПеревернуто: ${reversedNumbers}`;
+
+        // 1.2. Функція для видалення нулів з масиву
+        function no_zeros(numbers) {
+            return numbers.filter(function(num) {
+                return num !== 0;
+            });
+        }
+
+        let originalArray = [0, 1, 2, 0, 3, 4, 0, 5];
+        let modifiedArray = no_zeros(originalArray);
+        document.getElementById('result2').textContent = `Оригінал: [${originalArray.join(', ')}]\nБез нулів: [${modifiedArray.join(', ')}]`;
+
+        // 1.3. Функція для перевертання рядка
+        function reverser(text) {
+            let charArray = text.split('');
+            let reversedArray = charArray.reverse();
+            let reversedText = reversedArray.join('');
+            return reversedText;
+        }
+
+        let originalText = "Smell like teen spirit";
+        let reversedText = reverser(originalText);
+        document.getElementById('result3').textContent = `Оригінал: "${originalText}"\nПеревернуто: "${reversedText}"`;
+
+        // 1.4. Функція для замін у рядку
+        function replaceString() {
+            let text = "Ранок вечір";
+            let words = text.split(' ');
+            if (words.length < 3) {
+                console.error("Рядок не містить достатньо слів для заміни.");
+                return text;
+            }
+            [words[1], words[2]] = [words[2], words[1]];
+            let finalText = words.join(',');
+            return finalText;
+        }
+
+        let replacedText = replaceString();
+        document.getElementById('result4').textContent = `Оригінал: "Я не люблю морозиво"\nПісля замін: "${replacedText}"`;
+    </script>
+
+</body>
+</html>
