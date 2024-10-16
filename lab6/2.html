@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Форма реєстрації</title>
+    <style>
+        .valid {
+            border: 2px solid green;
+        }
+        .invalid {
+            border: 2px solid red;
+        }
+        .feedback {
+            margin-left: 10px;
+            font-size: 18px;
+            vertical-align: middle;
+        }
+        .feedback.valid::before {
+            content: "✔️";
+            color: green;
+        }
+        .feedback.invalid::before {
+            content: "❌";
+            color: red;
+        }
+        .error-message {
+            color: red;
+            font-size: 12px;
+            margin-top: 2px;
+        }
+        .success-message {
+            color: green;
+            font-size: 12px;
+            margin-top: 2px;
+        }
+        form {
+            max-width: 400px;
+            margin: auto;
+        }
+        .form-group {
+            margin-bottom: 15px;
+            position: relative;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+
+    <h2 style="text-align:center;">Форма реєстрації</h2>
+    <form id="registrationForm" novalidate>
+        <div class="form-group">
+            <label for="email">Адреса електронної пошти (e-mail):</label>
+            <input type="email" id="email" name="email" required>
+            <span class="feedback" id="emailFeedback"></span>
+            <div class="error-message" id="emailError"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="fullname">Ім’я та прізвище:</label>
+            <input type="text" id="fullname" name="fullname" required>
+            <span class="feedback" id="fullnameFeedback"></span>
+            <div class="error-message" id="fullnameError"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="login">Логін:</label>
+            <input type="text" id="login" name="login" required>
+            <span class="feedback" id="loginFeedback"></span>
+            <div class="error-message" id="loginError"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Пароль:</label>
+            <input type="password" id="password" name="password" required>
+            <span class="feedback" id="passwordFeedback"></span>
+            <div class="error-message" id="passwordError"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="postalCode">Поштовий індекс:</label>
+            <input type="text" id="postalCode" name="postalCode" required>
+            <span class="feedback" id="postalCodeFeedback"></span>
+            <div class="error-message" id="postalCodeError"></div>
+        </div>
+
+        <button type="button" id="validateBtn">Перевірити</button>
+    </form>
+
+    <script>
+        // Отримуємо посилання на елементи форми
+        const email = document.getElementById('email');
+        const fullname = document.getElementById('fullname');
+        const login = document.getElementById('login');
+        const password = document.getElementById('password');
+        const postalCode = document.getElementById('postalCode');
+        const validateBtn = document.getElementById('validateBtn');
+
+        // Функція для перевірки полів форми
+        function validateForm() {
+            // Регулярні вирази
+            const emailRegex = /^([a-z0-9._%+-]+)@pnu\.edu\.ua$/i;
+            const fullnameRegex = /^[А-ЯІЇЄҐA-Z][а-яіїєґa-z]+ [А-ЯІЇЄҐA-Z]+$/;
+            const loginRegex = /^[A-Za-z]+$/;
+            const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[_\-!@#$%^&*]).{8,}$/;
+            const postalCodeRegex = /^\d{5}$/;
+
+            let isValid = true;
+
+            // Перевірка e-mail
+            if (emailRegex.test(email.value.trim())) {
+                setValid(email, 'emailFeedback');
+            } else {
+                setInvalid(email, 'emailFeedback', 'emailError', 'E-mail повинен містити @pnu.edu.ua');
+                isValid = false;
+            }
+
+            // Перевірка Ім’я та прізвища
+            if (fullnameRegex.test(fullname.value.trim())) {
+                setValid(fullname, 'fullnameFeedback');
+            } else {
+                setInvalid(fullname, 'fullnameFeedback', 'fullnameError', 'Ім’я та прізвище повинні відповідати формату: Перша літера першого слова велика, всі літери другого слова великі');
+                isValid = false;
+            }
+
+            // Перевірка логіну
+            if (loginRegex.test(login.value.trim())) {
+                setValid(login, 'loginFeedback');
+            } else {
+                setInvalid(login, 'loginFeedback', 'loginError', 'Логін повинен містити тільки латинські літери');
+                isValid = false;
+            }
+
+            // Перевірка пароля
+            if (passwordRegex.test(password.value)) {
+                setValid(password, 'passwordFeedback');
+            } else {
+                setInvalid(password, 'passwordFeedback', 'passwordError', 'Пароль мінімум 8 символів, з 1 літерою, 1 цифрою та 1 спецсимволом (_-!@#$%^&*)');
+                isValid = false;
+            }
+
+            // Перевірка поштового індексу
+            if (postalCodeRegex.test(postalCode.value.trim())) {
+                setValid(postalCode, 'postalCodeFeedback');
+            } else {
+                setInvalid(postalCode, 'postalCodeFeedback', 'postalCodeError', 'Поштовий індекс повинен складатися з 5 цифр');
+                isValid = false;
+            }
+
+            if (isValid) {
+                alert('Всі поля заповнені коректно!');
+            }
+        }
+
+        // Функція для встановлення валідного стану поля
+        function setValid(element, feedbackId) {
+            element.classList.remove('invalid');
+            element.classList.add('valid');
+            document.getElementById(feedbackId).classList.add('valid');
+            document.getElementById(feedbackId).classList.remove('invalid');
+            // Очистка повідомлення про помилку
+            const errorElement = document.getElementById(feedbackId.replace('Feedback', 'Error'));
+            if (errorElement) {
+                errorElement.textContent = '';
+            }
+        }
+
+        // Функція для встановлення невалідного стану поля
+        function setInvalid(element, feedbackId, errorId, message) {
+            element.classList.remove('valid');
+            element.classList.add('invalid');
+            document.getElementById(feedbackId).classList.add('invalid');
+            document.getElementById(feedbackId).classList.remove('valid');
+            // Відображення повідомлення про помилку
+            const errorElement = document.getElementById(errorId);
+            if (errorElement) {
+                errorElement.textContent = message;
+            }
+        }
+
+        // Додаємо обробник події на кнопку
+        validateBtn.addEventListener('click', validateForm);
+    </script>
+
+</body>
+</html>
