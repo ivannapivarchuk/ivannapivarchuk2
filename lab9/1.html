@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Combined Animations</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    #box, #circle, #colorBox {
+      position: absolute;
+    }
+
+    #box {
+      width: 100px;
+      height: 100px;
+      background-color: red;
+      top: 50px;
+      left: 0;
+    }
+
+    #circle {
+      width: 50px;
+      height: 50px;
+      background-color: blue;
+      border-radius: 50%;
+      top: 200px;
+      left: 0;
+    }
+
+    #colorBox {
+      width: 100px;
+      height: 100px;
+      background-color: green;
+      top: 350px;
+      left: 50%;
+      transform: translateX(-50%);
+      transition: background-color 1s, border-radius 1s;
+    }
+  </style>
+</head>
+<body>
+  <div id="box"></div>
+  <div id="circle"></div>
+  <div id="colorBox"></div>
+
+  <script>
+    // Анімація руху #box вправо за допомогою setTimeout()
+    let box = document.getElementById('box');
+    let boxPosition = 0;
+
+    function moveBox() {
+      boxPosition += 1;
+      box.style.left = boxPosition + 'px';
+
+      if (boxPosition < window.innerWidth - 100) {
+        setTimeout(moveBox, 10);
+      }
+    }
+
+    moveBox();
+
+    // Анімація руху #circle вправо за допомогою requestAnimationFrame()
+    let circle = document.getElementById('circle');
+    let circlePosition = 0;
+
+    function animateCircle() {
+      circlePosition += 2;
+      circle.style.left = circlePosition + 'px';
+
+      if (circlePosition < window.innerWidth - 50) {
+        requestAnimationFrame(animateCircle);
+      }
+    }
+
+    requestAnimationFrame(animateCircle);
+
+    // Анімація зміни кольору і форми #colorBox за допомогою CSS transition
+    let colorBox = document.getElementById('colorBox');
+
+    setInterval(() => {
+      colorBox.style.backgroundColor = colorBox.style.backgroundColor === 'green' ? 'yellow' : 'green';
+      colorBox.style.borderRadius = colorBox.style.borderRadius === '50%' ? '0' : '50%';
+    }, 1000);
+  </script>
+</body>
+</html>
