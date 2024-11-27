@@ -59,9 +59,10 @@
         // Функція для виведення загальної вартості (fun2)
         function fun2() {
             if (selectedProductIndex !== -1) {
+                const productName = products[selectedProductIndex];
                 const totalAmount = quantities[selectedProductIndex] * prices[selectedProductIndex];
                 document.getElementById("totalAmount").textContent = 
-                    `Загальна вартість товару: ${totalAmount} грн`;
+                    `Загальна вартість товару: ${productName} грн`;
             } else {
                 document.getElementById("totalAmount").textContent = 
                     "Спочатку виберіть товар та натисніть кнопку 'Наявна кількість і вартість'.";
