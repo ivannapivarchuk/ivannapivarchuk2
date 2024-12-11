@@ -4,38 +4,21 @@
   <!-- Підключення бібліотеки jQuery -->
   <script type="text/javascript" src="jquery-3.7.1.min.js"></script>
 
-  <style>
-    /* Додатковий стиль для div при наведенні миші */
-    .hover-style {
-      background-color: lightblue;
-      border: 2px solid blue;
-    }
-  </style>
-
   <script>
-    $(document).ready(function() {
-      // Зміна тексту першого та останнього абзацу
-      $("p:first").text("DOM first!");
-      jQuery("p:last").text("DOM last!");
+    $(document).ready(function(){
+      var $text = $('#hide_text'); // Присвоюємо змінній блок з id="hide_text"
+      $text.hide(); // Приховуємо отриманий блок
 
-      // Додавання стилю при наведенні миші
-      $("div").hover(
-        function() {
-          $(this).addClass("hover-style");  // Додаємо клас при наведенні
-        },
-        function() {
-          $(this).removeClass("hover-style");  // Видаляємо клас при відведенні
-        }
-      );
+      // При кліці на HTML елемент з класом "button"
+      $('.button').click(function(){
+        $text.show(200); // Показуємо прихований блок із затримкою 200 мс
+      });
     });
   </script>
 </head>
 <body>
   <h1>Контент сторінки</h1>
-  <p>Це перший абзац.</p>
-  <div>Цей блок змінює стиль при наведенні миші.</div>
-  <p>Це останній абзац.</p>
+  <a href="#" class="button">Натисніть, щоб показати текст</a>
+  <div id="hide_text">Демонстраційний прихований текст</div>
 </body>
 </html>
-
-
